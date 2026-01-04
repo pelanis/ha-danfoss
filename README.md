@@ -33,14 +33,7 @@ webui_use_port: true     # Include port in WebUI URL
 webui_port: ""           # Custom port (leave empty to use main port)
 ```
 
-See [addon README](danfoss-addon/README.md) for full configuration options.
-
-## Documentation
-
-- **[Quick Start Guide](docs/DEPLOYMENT.md)** - Fast deployment instructions
-- **[Build Guide](docs/BUILD.md)** - Comprehensive build and development guide
-- **[Addon README](danfoss-addon/README.md)** - Detailed addon documentation
-- **[Changelog](danfoss-addon/CHANGELOG.md)** - Version history
+See [addon README](danfoss-addon/README.md) for full configuration options and [CHANGELOG](danfoss-addon/CHANGELOG.md) for version history.
 
 ## Credits
 
