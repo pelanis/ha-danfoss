@@ -143,8 +143,12 @@ public class Bootstrapper {
                 }
 
                 var iconMaster = masterHandler.iconMaster();
-                homeAssistantClient.upsertState(iconMaster.toState(), "sensor.danfoss_master_controller_last_updated");
-                logger.info("sensors updated successfully");
+                if (iconMaster != null && iconMaster.houseName() != null) {
+                    homeAssistantClient.upsertState(iconMaster.toState(), "sensor.danfoss_master_controller_last_updated");
+                    logger.info("sensors updated successfully");
+                } else {
+                    logger.debug("IconMaster data not yet available, skipping master controller update");
+                }
             } catch (Exception e) {
                 logger.error("sensor update error", e);
             }
@@ -184,23 +188,24 @@ public class Bootstrapper {
                 var masterHandler = this.masterHandler.get();
                 try {
                     var iconMaster = masterHandler.iconMaster();
+                    if (iconMaster == null || iconMaster.houseName() == null) {
+                        logger.debug("IconMaster data not yet available, skipping MQTT update");
+                        return;
+                    }
+
                     for (var room : masterHandler.listRooms()) {
-                        // first publish climate device
                         var thermostatID = STR."danfoss_icon_thermostat_room_\{room.number()}";
                         var entityTopic = STR."homeassistant/climate/\{thermostatID}/config";
                         var climateEntity = room.toMQTTClimateEntity(thermostatID, STATE_TOPIC_FMT, SET_TOPIC_FMT, iconMaster);
                         mqttClient.publish(entityTopic, Json.toJsonBytes(climateEntity), 0, false);
 
-                        // now publish update to state topic
                         var stateTopic = String.format(STATE_TOPIC_FMT, room.number());
                         var state = room.toState();
                         mqttClient.publish(stateTopic, Json.toJsonBytes(state), 0, false);
 
-                        // and finally subscribe to set topic
                         var setTopic = String.format(SET_TOPIC_FMT, room.number());
                         var mqttToken = subscribeToTopic(setTopic, mqttClient);
                         if (!mqttToken.isComplete()) {
-                            //force resubscribe
                             mqttClient.unsubscribe(setTopic);
                             subscribers.remove(setTopic);
                             logger.info("MQTT subscriber removed = {}", setTopic);
