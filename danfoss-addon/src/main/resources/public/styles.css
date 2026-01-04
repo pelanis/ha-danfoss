@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --danfoss-red: #DC0019;
+    --danfoss-red-hover: #B00015;
+    --danfoss-white: #FFFFFF;
+    --danfoss-grey: #F5F5F5;
+    --danfoss-text: #333333;
+    --danfoss-border: #DDDDDD;
+    --danfoss-success: #4CAF50;
+    --danfoss-error: #DC0019;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, var(--danfoss-grey) 0%, #E8E8E8 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: var(--danfoss-text);
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--danfoss-red);
+    margin-bottom: 8px;
+}
+
+.header p {
+    font-size: 14px;
+    color: #666;
+}
+
+.card {
+    background: var(--danfoss-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--danfoss-text);
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 15px;
+    border: 2px solid var(--danfoss-border);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: var(--danfoss-white);
+    color: var(--danfoss-text);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--danfoss-red);
+    box-shadow: 0 0 0 3px rgba(220, 0, 25, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--danfoss-white);
+    background: var(--danfoss-red);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    background: var(--danfoss-red-hover);
+    box-shadow: 0 4px 12px rgba(220, 0, 25, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    background: #CCCCCC;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.message {
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.message.success {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid var(--danfoss-success);
+    color: var(--danfoss-success);
+}
+
+.message.error {
+    background: rgba(220, 0, 25, 0.1);
+    border: 1px solid var(--danfoss-error);
+    color: var(--danfoss-error);
+}
+
+.config-output {
+    background: var(--danfoss-grey);
+    border: 1px solid var(--danfoss-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.config-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.config-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--danfoss-text);
+}
+
+.copy-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    background: var(--danfoss-red);
+    color: var(--danfoss-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: var(--danfoss-red-hover);
+}
+
+.loader {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--danfoss-grey);
+    border-top-color: var(--danfoss-white);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+.btn.loading .loader {
+    display: inline-block;
+}
+
+.btn.loading .btn-text {
+    display: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 24px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+}

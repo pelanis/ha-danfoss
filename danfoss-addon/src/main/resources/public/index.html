@@ -2,18 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SetUp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danfoss Icon Setup</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>Danfoss Icon</h1>
+            <p>Connect your controller to Home Assistant</p>
+        </div>
 
-<h2>Danfoss Icon Discovery</h2>
-<form method="post" action="/discover">
-    <label for="oneTimeCode">One Time Code:</label>
-    <input type="text" id="oneTimeCode" name="oneTimeCode"><br><br>
-    <label for="userName">UserName:</label>
-    <input type="text" id="userName" name="userName"><br><br>
-    <button>Start</button>
-</form>
+        <div class="card">
+            <form method="post" action="/discover" id="discoveryForm">
+                <div class="form-group">
+                    <label for="userName">Username</label>
+                    <input
+                        type="text"
+                        id="userName"
+                        name="userName"
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                        aria-label="Username">
+                </div>
 
+                <div class="form-group">
+                    <label for="oneTimeCode">Shared Home Key</label>
+                    <input
+                        type="text"
+                        id="oneTimeCode"
+                        name="oneTimeCode"
+                        placeholder="Enter your shared home key"
+                        required
+                        aria-label="Shared home key">
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">
+                    <span class="btn-text">Connect</span>
+                    <div class="loader"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('discoveryForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function() {
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+        });
+    </script>
 </body>
 </html>

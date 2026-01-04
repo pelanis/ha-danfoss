@@ -66,16 +66,47 @@ public class Application {
                     var appConfig = new AppConfig(bindingConfig.privateKey(), bindingConfig.userName(), response.housePeerId);
                     var appConfigJson = Json.toJsonString(appConfig);
                     ctx.html(STR."""
-      <h1>Discovered Icon house <b>\{response.houseName}</b> successfully</h1>
-      <p>Write the following config to <i>/share/danfoss-icon/danfoss_config.json</i> if addon won't start properly</p>
-      <h3>danfoss_config.json</h3>
-      <p style="background:#9FE2BF">
-      {</br>
-      &nbsp;&nbsp;"privateKey": \{ Arrays.toString(appConfig.privateKey()) },</br>
-      &nbsp;&nbsp;"userName": "\{ appConfig.userName() }",</br>
-      &nbsp;&nbsp;"peerId": "\{ appConfig.peerId() }"</br>
-      }</br>
-      </p>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Connection Successful</title>
+          <link rel="stylesheet" href="/styles.css">
+      </head>
+      <body>
+          <div class="container">
+              <div class="header">
+                  <h1>Danfoss Icon</h1>
+                  <p>Connection established</p>
+              </div>
+              <div class="card">
+                  <div class="message success">
+                      Successfully discovered Icon house <strong>\{response.houseName}</strong>
+                  </div>
+                  <div class="config-header">
+                      <h3>Configuration</h3>
+                      <button class="copy-btn" onclick="copyConfig()">Copy</button>
+                  </div>
+                  <div class="config-output" id="configOutput">\{appConfigJson}</div>
+                  <p style="margin-top: 16px; font-size: 13px; color: #666;">
+                      If the addon doesn't start properly, write this configuration to<br>
+                      <code style="background: #f5f5f5; padding: 2px 6px; border-radius: 4px;">/share/danfoss-icon/danfoss_config.json</code>
+                  </p>
+              </div>
+          </div>
+          <script>
+              function copyConfig() {
+                  const text = document.getElementById('configOutput').textContent;
+                  navigator.clipboard.writeText(text).then(() => {
+                      const btn = event.target;
+                      btn.textContent = 'Copied!';
+                      setTimeout(() => btn.textContent = 'Copy', 2000);
+                  });
+              }
+          </script>
+      </body>
+      </html>
       """);
                     logger.info("discovered Icon house {} with {} peerId (privateKey: {}) successfully",
                             response.houseName, response.housePeerId, Arrays.toString(bindingConfig.privateKey()));
@@ -84,11 +115,66 @@ public class Application {
                     discovery.close();
                     bootstrapper.load(appConfig);
                 } else {
-                    ctx.html("House was not discovered");
+                    ctx.html(STR."""
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Connection Failed</title>
+          <link rel="stylesheet" href="/styles.css">
+      </head>
+      <body>
+          <div class="container">
+              <div class="header">
+                  <h1>Danfoss Icon</h1>
+                  <p>Connection failed</p>
+              </div>
+              <div class="card">
+                  <div class="message error">
+                      House was not discovered. Please verify your credentials and try again.
+                  </div>
+                  <a href="/" style="text-decoration: none;">
+                      <button type="button" class="btn">Try Again</button>
+                  </a>
+              </div>
+          </div>
+      </body>
+      </html>
+      """);
                 }
             } catch (Throwable e) {
                 logger.error("failed to discover a new house", e);
-                ctx.html(STR."House was not discovered because of an error: \{e.getMessage()}").status(500);
+                ctx.html(STR."""
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Connection Error</title>
+          <link rel="stylesheet" href="/styles.css">
+      </head>
+      <body>
+          <div class="container">
+              <div class="header">
+                  <h1>Danfoss Icon</h1>
+                  <p>Connection error</p>
+              </div>
+              <div class="card">
+                  <div class="message error">
+                      <strong>Error:</strong> \{e.getMessage()}
+                  </div>
+                  <p style="margin: 16px 0; font-size: 14px; color: #666;">
+                      Please check your credentials and network connection, then try again.
+                  </p>
+                  <a href="/" style="text-decoration: none;">
+                      <button type="button" class="btn">Try Again</button>
+                  </a>
+              </div>
+          </div>
+      </body>
+      </html>
+      """).status(500);
             }
         });
 

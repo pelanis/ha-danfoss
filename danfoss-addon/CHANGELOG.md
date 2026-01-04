@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.6]
+
+- Fixed NullPointerException when IconMaster data is not yet available during startup
+- Added null-safety checks for IconMaster state reporting to both Home Assistant and MQTT
+- Redesigned web UI with modern Danfoss branding and improved UX
+- Added styled success/error pages for pairing process
+- Added configuration options for custom WebUI host and port (reverse proxy support)
+- Added copy-to-clipboard functionality for configuration JSON
+- Improved form validation and loading states in web interface
+- Added comprehensive BUILD.md documentation for forked repositories
+- Added GitHub Actions workflow for automated builds and publishing
+
 ## [0.4.5]
 
 - Added new config option `m4FixEnabled` which could be enabled to fix Mac M4 startup bug.
