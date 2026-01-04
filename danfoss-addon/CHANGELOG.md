@@ -11,9 +11,8 @@
 - Added configuration options for custom WebUI host and port (reverse proxy support)
 - Added copy-to-clipboard functionality for configuration JSON
 - Improved form validation and loading states in web interface
-- Added comprehensive build and deployment documentation (see docs/ folder)
-- Added GitHub Actions workflow for automated builds and publishing
-- Organized documentation into docs/ folder
+- Added GitHub Actions workflow for automated build validation
+- Updated README with fork installation instructions
 
 ## [0.4.5]
 
