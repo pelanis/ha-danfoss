@@ -71,7 +71,7 @@ jobs:
           echo "Docker image: \`${{ secrets.DOCKER_USERNAME }}/ha-danfoss:${{ steps.version.outputs.version }}\`" >> release-notes.md
           echo "" >> release-notes.md
           echo "### Installation" >> release-notes.md
-          echo "See [BUILD.md](BUILD.md) for installation instructions." >> release-notes.md
+          echo "See [docs/BUILD.md](docs/BUILD.md) for installation instructions." >> release-notes.md
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

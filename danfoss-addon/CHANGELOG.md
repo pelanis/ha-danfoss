@@ -1,6 +1,8 @@
 # Changelog
 
-## [0.4.6]
+## [0.5.0-fork] - Fork Release
+
+**This is a forked version with significant enhancements**
 
 - Fixed NullPointerException when IconMaster data is not yet available during startup
 - Added null-safety checks for IconMaster state reporting to both Home Assistant and MQTT
@@ -9,8 +11,9 @@
 - Added configuration options for custom WebUI host and port (reverse proxy support)
 - Added copy-to-clipboard functionality for configuration JSON
 - Improved form validation and loading states in web interface
-- Added comprehensive BUILD.md documentation for forked repositories
+- Added comprehensive build and deployment documentation (see docs/ folder)
 - Added GitHub Actions workflow for automated builds and publishing
+- Organized documentation into docs/ folder
 
 ## [0.4.5]
 
