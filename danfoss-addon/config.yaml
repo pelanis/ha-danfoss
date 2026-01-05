@@ -6,6 +6,9 @@ init: false
 url: "https://github.com/pelanis/ha-danfoss"
 homeassistant_api: true
 webui: "http://[HOST]:[PORT:9199]"
+ingress: true
+ingress_port: 9199
+ingress_stream: true
 watchdog: "http://[HOST]:[PORT:9199]/health"
 map:
   - share:rw
@@ -15,9 +18,6 @@ options:
   haUpdatePeriodInSeconds: 60
   sensorNameFmt: "sensor.danfoss_%d_temperature"
   port: 9199
-  webui_host: ""
-  webui_use_port: true
-  webui_port: ""
   mqttEnabled: false
   mqttHost: core-mosquitto
   mqttPort: 1883
@@ -30,9 +30,6 @@ schema:
   haUpdatePeriodInSeconds: "int(1,86400)"
   sensorNameFmt: str
   port: port
-  webui_host: str?
-  webui_use_port: bool
-  webui_port: str?
   mqttEnabled: bool
   mqttHost: str
   mqttPort: port

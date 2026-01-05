@@ -9,9 +9,6 @@ public record Options(
         int haUpdatePeriodInSeconds,
         String sensorNameFmt,
         int port,
-        String webui_host,
-        boolean webui_use_port,
-        String webui_port,
         boolean mqttEnabled,
         String mqttHost,
         int mqttPort,
@@ -27,7 +24,6 @@ public record Options(
         }
 
         return new Options(1, "sensor.danfoss_%d_temperature", 9199,
-                "", true, "",
                 false, "core-mosquitto", 1883, 60, "", "", "info");
     }
 
