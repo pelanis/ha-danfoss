@@ -36,9 +36,6 @@ If MQTT is enabled in add-on configuration, all house thermostats will be expose
 
 Documentation on how Home Assistant [climate](https://developers.home-assistant.io/docs/core/entity/climate/) entities (thermostats) might be created can be found [here](DOCS.md).
 
-## Donations
+## Credits
 
-If this repository was useful to you and if you are willing to pay for it, feel free to send any amount through paypal:
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/soundvibe)
-
+This is a fork of [soundvibe/ha-danfoss](https://github.com/soundvibe/ha-danfoss). Please support the original author if you find this addon useful.

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.1-fork] - Ingress Support
+
+- Enabled Home Assistant ingress for reverse proxy support
+- Removed unused webui_host, webui_use_port, webui_port configuration options
+- Simplified configuration by relying on HA ingress routing
+
 ## [0.5.0-fork] - Fork Release
 
 **This is a forked version with significant enhancements**
@@ -8,7 +14,6 @@
 - Added null-safety checks for IconMaster state reporting to both Home Assistant and MQTT
 - Redesigned web UI with modern Danfoss branding and improved UX
 - Added styled success/error pages for pairing process
-- Added configuration options for custom WebUI host and port (reverse proxy support)
 - Added copy-to-clipboard functionality for configuration JSON
 - Improved form validation and loading states in web interface
 - Added GitHub Actions workflow for automated build validation

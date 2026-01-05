@@ -6,11 +6,11 @@
 
   <groupId>net.soundvibe</groupId>
   <artifactId>ha-danfoss-addon</artifactId>
-  <version>0.0.1</version>
+  <version>0.5.1-fork</version>
   <packaging>jar</packaging>
   <name>ha-danfoss</name>
-  <description>Home assistant danfoss addon</description>
-  <url>https://github.com/soundvibe/ha-danfoss</url>
+  <description>Home assistant danfoss addon (fork)</description>
+  <url>https://github.com/pelanis/ha-danfoss</url>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -20,9 +20,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:https://github.com/soundvibe/ha-danfoss.git</connection>
-    <developerConnection>scm:git:https://github.com/soundvibe/ha-danfoss.git</developerConnection>
-    <url>https://github.com/soundvibe/ha-danfoss.git</url>
+    <connection>scm:git:https://github.com/pelanis/ha-danfoss.git</connection>
+    <developerConnection>scm:git:https://github.com/pelanis/ha-danfoss.git</developerConnection>
+    <url>https://github.com/pelanis/ha-danfoss.git</url>
     <tag>HEAD</tag>
   </scm>
   <developers>

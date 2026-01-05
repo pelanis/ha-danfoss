@@ -12,6 +12,6 @@ COPY run.sh /
 RUN chmod a+x /run.sh
 
 # Copy the JAR file to the container
-COPY ha-danfoss-addon-0.0.1.jar /app.jar
+COPY ha-danfoss-addon.jar /app.jar
 
 CMD [ "/run.sh" ]
