@@ -178,6 +178,9 @@ public class Application {
             }
         });
 
+        app.start(options.port());
+        logger.info("started addon on port {}", options.port());
+
         CONFIG_FILES.stream()
                 .filter(Files::exists)
                 .map(path -> Json.fromPath(path, AppConfig.class))
@@ -187,10 +190,6 @@ public class Application {
                     logger.info("config file found, bootstrapping...");
                     bootstrapper.load(appConfig);
                 }, () -> logger.info("config file not found, use ip:port/discover endpoint to discover new house"));
-
-
-        app.start(options.port());
-        logger.info("started addon");
     }
 
     public static void changeRootLogLevel(String level){
