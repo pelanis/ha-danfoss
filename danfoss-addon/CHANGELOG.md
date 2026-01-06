@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.5.3-fork] - Container Memory Optimization
+
+- Switched from openjdk21 to openjdk21-jre-headless (smaller image, less memory)
+- Added container-aware JVM settings:
+  - `-XX:+UseContainerSupport` for proper cgroup memory detection
+  - `-XX:MaxRAMPercentage=25.0` to use 25% of container memory
+  - `-Xss256k` reduced thread stack size
+  - `-XX:-UsePerfData` to disable unneeded performance counters
+- Reduced metaspace from 64MB to 48MB
+
 ## [0.5.2-fork] - Memory & Startup Fixes
 
 - Fixed Javalin "created but never started" warning by reordering startup sequence
