@@ -6,7 +6,7 @@
 
   <groupId>net.soundvibe</groupId>
   <artifactId>ha-danfoss-addon</artifactId>
-  <version>0.5.1-fork</version>
+  <version>0.5.3-fork</version>
   <packaging>jar</packaging>
   <name>ha-danfoss</name>
   <description>Home assistant danfoss addon (fork)</description>
