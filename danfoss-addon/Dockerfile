@@ -4,7 +4,7 @@ FROM $BUILD_FROM
 
 RUN mkdir -p /share/danfoss-icon/
 
-RUN apk add --no-cache openjdk21
+RUN apk add --no-cache openjdk21-jre-headless
 
 WORKDIR /
 

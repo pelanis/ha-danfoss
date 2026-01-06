@@ -1,6 +1,6 @@
 name: "Danfoss Icon (Fork)"
 description: "Danfoss Icon Master Controller Addon - Enhanced Fork"
-version: "0.5.2-fork"
+version: "0.5.3-fork"
 slug: "danfoss-fork"
 init: false
 url: "https://github.com/pelanis/ha-danfoss"
