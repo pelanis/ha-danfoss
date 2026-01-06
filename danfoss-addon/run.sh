@@ -16,4 +16,5 @@ java --enable-preview \
   -XX:+UseSerialGC \
   -XX:+TieredCompilation -XX:TieredStopAtLevel=1 \
   -XX:-UsePerfData \
+  -XX:+ExitOnOutOfMemoryError \
   -jar app.jar

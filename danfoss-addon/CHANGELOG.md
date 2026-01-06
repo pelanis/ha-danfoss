@@ -9,6 +9,7 @@
   - `-Xss256k` reduced thread stack size
   - `-XX:-UsePerfData` to disable unneeded performance counters
 - Reduced metaspace from 64MB to 48MB
+- Added ExitOnOutOfMemoryError for clean shutdown on OOM
 
 ## [0.5.2-fork] - Memory & Startup Fixes
 
@@ -93,7 +94,7 @@
 
 ## [0.2.4]
 
-- Try to create config dir before writing to it during pairing process 
+- Try to create config dir before writing to it during pairing process
 
 ## [0.2.3]
 
