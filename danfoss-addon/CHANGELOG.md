@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.5.2-fork] - Memory & Startup Fixes
+
+- Fixed Javalin "created but never started" warning by reordering startup sequence
+- Reduced JVM memory footprint for constrained HA environments (Raspberry Pi)
+  - Heap: 256MB → 128MB max, 64MB → 32MB initial
+  - Added 64MB metaspace limit
+  - Switched to SerialGC for lower overhead
+  - Tiered compilation level 1 for faster startup
+- Reduced thread pool sizes (16+8 → 4+2) to match actual workload
+
 ## [0.5.1-fork] - Ingress Support
 
 - Enabled Home Assistant ingress for reverse proxy support
