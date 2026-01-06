@@ -26,8 +26,8 @@ public class Bootstrapper {
 
     private static final Logger logger = LoggerFactory.getLogger(Bootstrapper.class);
 
-    private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(16, Thread.ofVirtual().factory());
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8, Thread.ofVirtual().factory());
+    private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(4, Thread.ofVirtual().factory());
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2, Thread.ofVirtual().factory());
     private final Options options;
 
     private final Map<String, IMqttToken> subscribers = new ConcurrentHashMap<>(ICON_MAX_ROOMS * 2);
