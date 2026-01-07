@@ -1,41 +1,81 @@
-# Home Assistant Addon for [Danfoss Icon Controller](https://www.danfoss.com/en-gb/products/dhs/smart-heating/smart-heating/danfoss-icon/).
+# Danfoss Icon Add-on Setup Guide
 
+Integrate your [Danfoss Icon Controller](https://www.danfoss.com/en-gb/products/dhs/smart-heating/smart-heating/danfoss-icon/) floor heating system with Home Assistant.
 
-## Summary
+---
 
-This addon allows you to integrate heating solutions by Danfoss company with Home Assistant.
+## Requirements
 
-## Setup
+- Home Assistant with Supervisor
+- Danfoss Icon Master Controller connected to your network
+- **Danfoss Icon Android app** (required for pairing)
 
-### Pairing
+> **Important:** Only the Android app is supported for pairing. The iPhone app uses a different protocol that is not compatible with this add-on.
 
-After installing addon, open it's Web UI and enter one time code and username. 
-One time code can be retrieved from Danfoss Icon official Android application by going to `Settings -> Share house` (paste code without dashes)
-### Note 
-As of now, only code, generated from Danfoss `Android` app is supported. 
-It looks like iPhone app uses different protocol which isn't supported by this addon. 
-If you own iPhone, try finding Android phone to do the pairing, and once it completes, you can uninstall the app afterwards.
+---
 
-Username can be whatever name you like.
-Click `Start` button for pairing to start.
-If everything goes well, you will see the success message.
+## Pairing Process
 
-### Config
+### Step 1: Get Your Pairing Code
 
-After successful pairing process, addon will try to write config data needed to connect to Danfoss cloud into `/share/danfoss-icon/danfoss_config.json`.
-If this file is present, the pairing process won't be needed and the addon will automatically connect to Danfoss servers.
+1. Open the **Danfoss Icon** app on your Android device
+2. Go to **Settings → Share house**
+3. Copy the one-time code (enter it **without dashes**)
 
-### Home Assistant
+### Step 2: Connect to Home Assistant
 
-All house thermostats will be exposed to Home Assistant as temperature sensors, e.g. `sensor.danfoss_{room_number}_temperature`.
-Remaining battery percentage is written into entity attributes - `battery_level`.
+1. Start the add-on and open the **Web UI**
+2. Enter your **one-time code** from Step 1
+3. Enter a **username** (can be any name you choose)
+4. Click **Connect**
 
-If MQTT is enabled in add-on configuration, all house thermostats will be exposed as climate devices in Home Assistant.
+If successful, you'll see a confirmation message with your house name.
 
-### Documentation
+> **Tip:** If you only have an iPhone, borrow an Android device temporarily for pairing. Once complete, the Android app is no longer needed.
 
-Documentation on how Home Assistant [climate](https://developers.home-assistant.io/docs/core/entity/climate/) entities (thermostats) might be created can be found [here](DOCS.md).
+---
+
+## After Pairing
+
+### Configuration File
+
+The add-on saves connection credentials to:
+```
+/share/danfoss-icon/danfoss_config.json
+```
+
+As long as this file exists, the add-on will automatically reconnect on restart without needing to pair again.
+
+### Home Assistant Integration
+
+**With MQTT (Recommended):**
+Enable MQTT in the add-on configuration. All thermostats will automatically appear as climate entities in Home Assistant.
+
+**Without MQTT:**
+Thermostats are exposed as temperature sensors:
+- Entity ID: `sensor.danfoss_{room_number}_temperature`
+- Attributes: `battery_level`, `room_number`, `temperature_home`, `temperature_away`
+
+See [Configuration Guide](DOCS.md) for manual climate entity setup without MQTT.
+
+---
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Add-on won't start | Check logs for memory errors. Try increasing container memory. |
+| Pairing fails | Verify the code is from Android app and entered without dashes. |
+| Web UI unstyled | Clear browser cache and reload. |
+| Thermostats not appearing | Enable MQTT or wait 60 seconds for sensor discovery. |
+
+---
+
+## More Information
+
+- [Configuration Options](DOCS.md) - All settings and advanced setup
+- [Changelog](CHANGELOG.md) - Version history
 
 ## Credits
 
-This is a fork of [soundvibe/ha-danfoss](https://github.com/soundvibe/ha-danfoss). Please support the original author if you find this addon useful.
+Fork of [soundvibe/ha-danfoss](https://github.com/soundvibe/ha-danfoss). Please support the original author if you find this add-on useful.

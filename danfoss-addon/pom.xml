@@ -6,7 +6,7 @@
 
   <groupId>net.soundvibe</groupId>
   <artifactId>ha-danfoss-addon</artifactId>
-  <version>0.5.4-fork</version>
+  <version>0.5.5-fork</version>
   <packaging>jar</packaging>
   <name>ha-danfoss</name>
   <description>Home assistant danfoss addon (fork)</description>
@@ -114,6 +114,30 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>copy-addon-config</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/addon-config</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.1.2</version>
