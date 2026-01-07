@@ -39,7 +39,14 @@ public class Application {
 
         var app = Javalin.create(config -> {
             config.showJavalinBanner = false;
-            config.staticFiles.add("/public", Location.CLASSPATH);
+            config.staticFiles.add(staticFiles -> {
+                staticFiles.hostedPath = "/";
+                staticFiles.directory = "/public";
+                staticFiles.location = Location.CLASSPATH;
+                staticFiles.mimeTypes.add("css", "text/css");
+                staticFiles.mimeTypes.add("js", "application/javascript");
+                staticFiles.mimeTypes.add("html", "text/html");
+            });
             var gsonMapper = new JsonMapper() {
                 @Override
                 public @NotNull String toJsonString(@NotNull Object obj, @NotNull Type type) {
@@ -72,7 +79,7 @@ public class Application {
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Connection Successful</title>
-          <link rel="stylesheet" href="/styles.css">
+          <link rel="stylesheet" href="styles.css">
       </head>
       <body>
           <div class="container">
@@ -122,7 +129,7 @@ public class Application {
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Connection Failed</title>
-          <link rel="stylesheet" href="/styles.css">
+          <link rel="stylesheet" href="styles.css">
       </head>
       <body>
           <div class="container">
@@ -134,7 +141,7 @@ public class Application {
                   <div class="message error">
                       House was not discovered. Please verify your credentials and try again.
                   </div>
-                  <a href="/" style="text-decoration: none;">
+                  <a href="." style="text-decoration: none;">
                       <button type="button" class="btn">Try Again</button>
                   </a>
               </div>
@@ -152,7 +159,7 @@ public class Application {
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Connection Error</title>
-          <link rel="stylesheet" href="/styles.css">
+          <link rel="stylesheet" href="styles.css">
       </head>
       <body>
           <div class="container">
@@ -167,7 +174,7 @@ public class Application {
                   <p style="margin: 16px 0; font-size: 14px; color: #666;">
                       Please check your credentials and network connection, then try again.
                   </p>
-                  <a href="/" style="text-decoration: none;">
+                  <a href="." style="text-decoration: none;">
                       <button type="button" class="btn">Try Again</button>
                   </a>
               </div>

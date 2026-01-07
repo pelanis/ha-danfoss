@@ -1,37 +1,74 @@
 <div align="center">
-<h1>Danfoss Icon Controller Add-on (Fork)</h1>
-<p><strong>Version 0.5.1-fork</strong> - Enhanced fork with improved UI, stability fixes, and reverse proxy support</p>
+
+# Danfoss Icon Controller Add-on (Fork)
+
+**Version 0.5.5-fork**
+
+Integrate your Danfoss Icon floor heating system with Home Assistant
+
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Add--on-blue?logo=homeassistant)](https://www.home-assistant.io/)
+
 </div>
 
-## What's New in This Fork
+---
 
-- ✅ **Fixed NPE crashes** - No more NullPointerException on startup
-- 🎨 **Modern UI** - Redesigned web interface with Danfoss branding
-- 🔧 **Reverse proxy support** - Home Assistant ingress enabled
-- 🔄 **Automated build validation** - CI/CD workflow
+## Features
 
-See [CHANGELOG](danfoss-addon/CHANGELOG.md) for full details.
+| Feature | Description |
+|---------|-------------|
+| **Automatic Discovery** | MQTT auto-discovery creates climate entities automatically |
+| **Real-time Updates** | Temperature and battery status synced every 60 seconds |
+| **Ingress Support** | Access the web UI directly from Home Assistant |
+| **Low Memory** | Optimized for Raspberry Pi and constrained environments |
 
-## Installation
+## Quick Start
 
-Add the repository URL under **Settings → Add-ons → Add-on Store** in your Home Assistant:
+### 1. Add Repository
 
-    https://github.com/pelanis/ha-danfoss
+In Home Assistant, go to **Settings → Add-ons → Add-on Store → ⋮ → Repositories**
 
-Then install **Danfoss Icon (Fork)** from the add-on store.
+Add this URL:
+```
+https://github.com/pelanis/ha-danfoss
+```
 
-**Note:** First install takes 5-10 minutes as Home Assistant builds the addon locally.
+### 2. Install Add-on
+
+Find **Danfoss Icon (Fork)** in the add-on store and click **Install**.
+
+> **Note:** First installation takes 5-10 minutes as Home Assistant builds the container.
+
+### 3. Pair Your Controller
+
+Open the add-on **Web UI** and enter your credentials from the Danfoss Icon Android app.
+
+See [Setup Guide](danfoss-addon/README.md) for detailed instructions.
+
+---
 
 ## Documentation
 
-See [addon README](danfoss-addon/README.md) for configuration options and [CHANGELOG](danfoss-addon/CHANGELOG.md) for version history.
+| Document | Description |
+|----------|-------------|
+| [Setup Guide](danfoss-addon/README.md) | Installation and pairing instructions |
+| [Configuration](danfoss-addon/DOCS.md) | All configuration options and advanced setup |
+| [Changelog](danfoss-addon/CHANGELOG.md) | Version history and release notes |
+
+## What's New in This Fork
+
+- Fixed startup crashes (NullPointerException)
+- Fixed memory issues for constrained environments
+- Modern web interface with Danfoss branding
+- Home Assistant ingress support
+- Automated CI/CD build validation
 
 ## Credits
 
 - **Original addon:** [soundvibe/ha-danfoss](https://github.com/soundvibe/ha-danfoss)
-- **Fork maintained by:** Pelanis
+- **Fork maintained by:** [Pelanis](https://github.com/pelanis)
 
 ---
 
-**Note:** This is a personal fork maintained independently. For the original addon, see [soundvibe/ha-danfoss](https://github.com/soundvibe/ha-danfoss).
-
+<div align="center">
+<sub>This is an independent fork. For the original addon, see <a href="https://github.com/soundvibe/ha-danfoss">soundvibe/ha-danfoss</a></sub>
+</div>

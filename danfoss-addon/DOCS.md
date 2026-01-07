@@ -1,29 +1,60 @@
-# Danfoss Icon Add-on
+# Configuration Guide
 
-### Configuration parameters
+Complete reference for all add-on configuration options and advanced Home Assistant integration.
 
-| Parameter               | Description                                                                                                                                                                                                |
-|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| haUpdatePeriodInSeconds | How often Home Assistant will be updated with changes from Danfoss Icon master controller (default: 60 seconds).                                                                                           |
-| sensorNameFmt           | Temperature values are exposed as HA states(sensors), here you can choose how they are named (using `Java` [String.Format()](https://docs.oracle.com/javase/21/docs/api/java/util/Formatter.html#syntax)). |
-| port                    | HTTP port to use for add-on's embedded web server                                                                                                                                                          |
-| mqttEnabled             | MQTT Home Assistant auto discovery is enabled                                                                                                                                                              |
-| mqttHost                | Host of MQTT broker                                                                                                                                                                                        |
-| mqttPort                | Port of MQTT broker                                                                                                                                                                                        |
-| mqttKeepAlive           | MQTT keep alive interval in seconds                                                                                                                                                                        |
-| mqttUsername            | Username to be used when connecting to MQTT broker                                                                                                                                                         |
-| mqttPassword            | Password to be used when connecting to MQTT broker                                                                                                                                                         |
-| logLevel                | Logger level (default: info)                                                                                                                                                                               |
+---
 
-## Setup climate devices in Home Assistant
+## Configuration Options
 
-It is enough to enable MQTT in add-on configuration and all house thermostats will be created in Home Assistant automatically.
+Configure these options in the add-on's **Configuration** tab.
 
-If MQTT can't be used, it is possible to do setup climate devices in Home Assistant, but this requires more work and the following steps should be done:
+### General Settings
 
-### 1. Setting temperature
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `haUpdatePeriodInSeconds` | `60` | How often to sync data with Home Assistant (1-86400 seconds) |
+| `sensorNameFmt` | `sensor.danfoss_%d_temperature` | Sensor entity naming pattern ([format syntax](https://docs.oracle.com/javase/21/docs/api/java/util/Formatter.html#syntax)) |
+| `port` | `9199` | HTTP port for the embedded web server |
+| `logLevel` | `info` | Log verbosity: `trace`, `debug`, `info`, `warn`, `error` |
 
-In order to set target temperature for thermostats from Home Assistant, main `configuration.yaml` should be updated, e.g.:
+### MQTT Settings
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `mqttEnabled` | `false` | Enable MQTT auto-discovery for climate entities |
+| `mqttHost` | `core-mosquitto` | MQTT broker hostname |
+| `mqttPort` | `1883` | MQTT broker port |
+| `mqttKeepAlive` | `60` | MQTT keep-alive interval in seconds |
+| `mqttUsername` | _(empty)_ | MQTT authentication username |
+| `mqttPassword` | _(empty)_ | MQTT authentication password |
+
+### Advanced Settings
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `m4FixEnabled` | `false` | Enable JVM fix for Apple M4 Macs (`-XX:UseSVE=0`). Only enable if experiencing startup issues on M4 hardware. |
+
+---
+
+## Home Assistant Integration
+
+### Option 1: MQTT (Recommended)
+
+The easiest way to integrate thermostats as climate entities.
+
+1. Enable `mqttEnabled` in add-on configuration
+2. Configure MQTT broker credentials if required
+3. Restart the add-on
+
+All thermostats will automatically appear as climate entities in Home Assistant.
+
+### Option 2: Manual Setup (Without MQTT)
+
+If MQTT is not available, you can manually create climate entities using REST commands and templates.
+
+#### Step 1: Create REST Commands
+
+Add to your `configuration.yaml`:
 
 ```yaml
 rest_command:
@@ -34,6 +65,7 @@ rest_command:
       accept: "application/json"
     payload: '{"command":"setHomeTemperature","value":{{ temperature }},"roomNumber":{{ roomNumber }}}'
     content_type: "application/json; charset=utf-8"
+
   set_danfoss_away_temp:
     url: http://localhost:9199/command
     method: POST
@@ -43,23 +75,27 @@ rest_command:
     content_type: "application/json; charset=utf-8"
 ```
 
-This adds 2 rest commands which can be executed from scripts or automations, e.g.:
+#### Step 2: Test the Commands
+
+Call the service from **Developer Tools → Services**:
 
 ```yaml
 service: rest_command.set_danfoss_home_temp
 data:
-  temperature: 22.5 # desired temperature.
-  roomNumber: 3 # roomNumber is exposed as attribute in each danfoss temperature sensor entity.
+  temperature: 22.5
+  roomNumber: 0
 ```
 
-### 2. Climate entity
-After we defined rest command, we can set up climate entities and use thermostats in HA dashboards, f.i. using custom [Template Climate](https://github.com/jcwillox/hass-template-climate) integration.
-The `configuration.yaml` could look like this (given our sensor is exposed as `sensor.danfoss_0_temperature`):
+> **Note:** `roomNumber` is available as an attribute on each Danfoss temperature sensor entity.
+
+#### Step 3: Create Climate Entities
+
+Install the [Template Climate](https://github.com/jcwillox/hass-template-climate) integration, then add to `configuration.yaml`:
 
 ```yaml
 climate:
   - platform: climate_template
-    name: Master Bedroom Thermostat
+    name: Living Room Thermostat
     unique_id: danfoss_0_thermostat
     min_temp: 5
     max_temp: 35
@@ -77,12 +113,38 @@ climate:
         roomNumber: "{{ state_attr('sensor.danfoss_0_temperature', 'room_number') }}"
 ```
 
-The result:
+Repeat for each room, changing `danfoss_0` to match the room number.
 
-![img.png](img.png)
+---
 
-## Donations
+## API Reference
 
-If this repository was useful to you and if you are willing to pay for it, feel free to send any amount through paypal:
+The add-on exposes a REST API on the configured port.
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/soundvibe)
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/health` | GET | Health check (returns `OK`) |
+| `/rooms` | GET | List all rooms with current state |
+| `/rooms/{name}` | GET | Get specific room by name |
+| `/command` | POST | Send command to thermostat |
+| `/discover` | POST | Initiate pairing (Web UI form) |
+
+### Command Payload
+
+```json
+{
+  "command": "setHomeTemperature",
+  "value": 22.5,
+  "roomNumber": 0
+}
+```
+
+Available commands:
+- `setHomeTemperature` - Set target temperature for home mode
+- `setAwayTemperature` - Set target temperature for away mode
+
+---
+
+## Support
+
+This is a fork of [soundvibe/ha-danfoss](https://github.com/soundvibe/ha-danfoss). If you find this add-on useful, please consider supporting the original author.
