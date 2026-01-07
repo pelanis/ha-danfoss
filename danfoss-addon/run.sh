@@ -10,9 +10,9 @@ fi
 
 java --enable-preview \
   -XX:+UseContainerSupport \
-  -XX:MaxRAMPercentage=25.0 \
-  -XX:MaxMetaspaceSize=48m \
-  -Xss256k \
+  -XX:MaxRAMPercentage=50.0 \
+  -XX:MaxMetaspaceSize=64m \
+  -Xss512k \
   -XX:+UseSerialGC \
   -XX:+TieredCompilation -XX:TieredStopAtLevel=1 \
   -XX:-UsePerfData \
