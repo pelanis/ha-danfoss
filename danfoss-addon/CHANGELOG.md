@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.5.4-fork] - Memory Leak Fixes
+
+- Fixed OkHttpClient leak - now using static singleton instead of creating per request
+- Added shutdown hooks for executor services to ensure clean termination
+- Fixed MQTT client leak on configuration reload - properly disconnect and close old client
+- Reuse HomeAssistantClient instance instead of creating new one per scheduled update
+- Fixed GridConnection leak - properly close on connection failure
+- Cleared MQTT subscribers map on client disposal
+- Added unit tests for memory leak fixes (Mockito integration)
+
 ## [0.5.3-fork] - Container Memory Optimization
 
 - Switched from openjdk21 to openjdk21-jre-headless (smaller image, less memory)

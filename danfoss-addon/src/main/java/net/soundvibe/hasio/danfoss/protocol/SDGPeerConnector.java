@@ -95,20 +95,22 @@ public class SDGPeerConnector {
     }
 
     private void connect() {
-        // In order not to mess up our connection state we need to make sure
-        // that any two calls are never running concurrently. We use
-        // singleThreadExecutorService for this purpose
         singleThread.execute(() -> {
             if (connection == null) {
-                return; // Stale Reconnect request from deleted/disabled Thing
+                return;
             }
 
+            GridConnection grid = null;
             try {
-                var grid = new GridConnection(privateKey, scheduler);
+                grid = new GridConnection(privateKey, scheduler);
                 grid.connect(GridConnection.Danfoss);
                 logger.info("Connecting to peer {}", SDG.bin2hex(peerId));
                 connection.connectToRemote(grid, peerId, Dominion.ProtocolName);
+                grid = null;
             } catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
+                if (grid != null) {
+                    grid.close();
+                }
                 setOfflineStatus(e);
                 return;
             }

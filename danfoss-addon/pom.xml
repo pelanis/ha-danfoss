@@ -6,7 +6,7 @@
 
   <groupId>net.soundvibe</groupId>
   <artifactId>ha-danfoss-addon</artifactId>
-  <version>0.5.3-fork</version>
+  <version>0.5.4-fork</version>
   <packaging>jar</packaging>
   <name>ha-danfoss</name>
   <description>Home assistant danfoss addon (fork)</description>
@@ -93,6 +93,20 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.8.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>5.8.0</version>
       <scope>test</scope>
     </dependency>
 
