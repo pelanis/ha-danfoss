@@ -12,18 +12,16 @@ import org.slf4j.LoggerFactory;
 public class HomeAssistantClient {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeAssistantClient.class);
-    private final String token;
-    private final OkHttpClient httpClient;
-
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json");
-
     private static final String HA_CORE_API = "http://supervisor/core/api";
+    private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
+            .followRedirects(false)
+            .build();
+
+    private final String token;
 
     public HomeAssistantClient(String token) {
         this.token = STR."Bearer \{token}";
-        this.httpClient = new OkHttpClient.Builder()
-                .followRedirects(false)
-                .build();
     }
 
     public void upsertState(State state, String sensorName) {
@@ -43,7 +41,7 @@ public class HomeAssistantClient {
                     .post(body)
                     .build();
 
-            var call = this.httpClient.newCall(request);
+            var call = HTTP_CLIENT.newCall(request);
             try (var response = call.execute()) {
                 if (response.code() == 200 || response.code() == 201) {
                     return;
